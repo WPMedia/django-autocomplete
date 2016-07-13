@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 from django.utils.safestring import mark_safe
-from django.utils.text import get_text_list, truncate_words
+from django.utils.text import get_text_list, Truncator
 from django.utils.translation import ugettext as _
 
 
@@ -37,7 +37,7 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
     def label_for_value(self, value):
         key = self.rel.get_related_field().name
         obj = self.rel.to._default_manager.get(**{key: value})
-        return truncate_words(obj, 14)
+        return Truncator(obj, 14).words
     
 
 class ForeignKeySearchWidget(BaseAutocompleteWidget):
